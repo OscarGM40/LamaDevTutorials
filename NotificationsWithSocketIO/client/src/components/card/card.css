@@ -1,0 +1,54 @@
+
+
+
+
+
+
+
+.card {
+   height: 280px;
+
+}
+
+.info {
+   display: flex;
+   align-items: center;
+   padding: 5px;
+   font-weight: 700;
+   font-size: 16px;
+}
+
+.userImg {
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   object-fit: cover;
+   margin-right: 10px;
+}
+
+.postImg {
+   width: 100%;
+   height: 200px;
+   object-fit: cover;
+}
+
+.interaction {
+   display: flex;
+   align-items: center;
+   padding: 5px 10px;
+}
+
+.cardIcon {
+   width: 20px;
+   height: 20px;
+   cursor: pointer;
+   margin-right: 10px;
+}
+/* fijate como puedo acceder al primero con first-of-type(1) y al último con last-of-type(1).Podría acceder al penúltimo o al segundo,tmb,simplemente con otro índice */
+
+.cardIcon:nth-last-of-type(1){
+   /* background-color: red; */
+   margin-left: auto;
+   width: 16px;
+   height: 16px;
+}

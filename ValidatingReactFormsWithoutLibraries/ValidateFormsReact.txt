@@ -1,0 +1,60 @@
+					VALIDATE REACT FROMS WITHOUT LIBRARIES
+
+Source: https://www.youtube.com/watch?v=tIdNeoHniEY&t=70s
+
+Si bien es cierto que hay un montón de tutoriales que usan formik,react-forms,pero la base es empezar sin usar una libreria para entender bien qué es lo que hacen.
+
+                EVITAR re_RENDERING
+
+Puedo observar que usar un simple onChange va a re-renderizar el componente:
+ <input 
+    placeholder={props.placeholder} 
+    onChange={e => props.setUsername!(e.target.value)} />
+
+Esto es porque usé un useState:
+const [ username, setUsername ] = useState<string>('');
+
+Hay una forma muy sencilla de evitar esto,y es usando una referencia,ya que no muta,siempre apunta al mismo sitio en la memoria:
+
+ const usernameRef = useRef<HTMLInputElement>(null);
+   <input ref={usernameRef} />
+
+Ahora ya no veré nada hasta que lo especifique:
+  <form onSubmit={handleSubmit}>
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log(usernameRef.current!.value);
+}
+NOTA:fijate que un form es un HTMLFormElement y un evento sintético de formulario es un React.FormEvent<HTMLFormElement>.
+
+ASi que puedo ver que tengo dos opciones de tomar los valores,con un useState+onChange o con un useRef+ref.current.Una crea re-rendering y la otra no.
+
+					SOLUCIÓN CLASE FORMDATA
+
+Vamos a ver otra forma,usando la interfaz FormData,la cual permite crear un formulario o pasarle uno(el que tengo en event.target):
+ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const data = new FormData(e.target as HTMLFormElement);
+  console.log(Object.fromEntries(data.entries()));
+}
+NOTA:es importante recalcar que no debería preocuparme por re-renderizados al usar useState.Esto está contemplado en la naturaleza de React y el usuario apenas notará el cambio en su GUI.
+
+Ya hemos visto las tres formas,useState,useRef y new FormData(data),y además,para este componente no importa nada que tenga estados,asi que vamos a usar useState de nuevo.
+También vamos a usar propiedades computadas,ya que son todo <inputs>:
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues({ ...values!, [name]: value });
+  };
+
+ const [values, setValues] = useState<FormValues>({
+    username: "",
+    email: "",
+    birthday: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+NOTA: investigar sobre como pasar un valor por defecto al useState.Volviendo al video,ya tengo todo en ese state,pero no hemos implantado ninguna validación realmente.Hagamoslo.
+MINUTO 21
