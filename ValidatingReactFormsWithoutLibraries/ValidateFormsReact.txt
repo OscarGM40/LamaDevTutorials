@@ -57,4 +57,126 @@ También vamos a usar propiedades computadas,ya que son todo <inputs>:
   });
 
 NOTA: investigar sobre como pasar un valor por defecto al useState.Volviendo al video,ya tengo todo en ese state,pero no hemos implantado ninguna validación realmente.Hagamoslo.
-MINUTO 21
+
+				IMPLEMENTANDO LAS VALIDACIONES
+
+La clave va a estar en la unión de los atributos html pattern y required y la pseudoclase input:invalid de css.
+
+Primero escribo el texto de los errores para los span que se mostrarán condicionalmente.
+
+const inputs = [
+  {
+    id: 1,
+    name: "username",
+    label: "username",
+    type: "text",
+    errorMessage: "Username should be 3-16 characters and shouldn't contain special characters",
+    placeholder: "Enter your username",
+  },
+  {
+    id: 2,
+    name: "email",
+    label: "email",
+    type: "text",
+    errorMessage: "Email should be a valid email address",
+    placeholder: "Enter your email",
+  },
+
+Este texto del error lo mostraremos en un span,pero con la pseudo-clase invalid le cambio el display de none a block::
+
+<span>{props.input.errorMessage}</span>
+
+span {
+  display: block;
+  margin: 0px auto;
+  width: 73%;
+  color: red;
+  font-size: 18px;
+  display:none;
+}
+
+input:invalid ~ span {
+  display: block;
+  margin: 0px auto;
+  width: 73%;
+  color: red;
+  font-size: 18px;
+}
+
+Fijate que he usado selector de hermano.Pero,¿cuando cambia esto?Para ello voy a usar el atributo html pattern,el cual es perfecto para expresiones regulares y es totalmente soportado.Va en conjunción con required(ya que si no pasa el pattern no pasa el required).Esto es clave:
+const inputs = [
+  {
+    id: 1,
+    name: "username",
+    label: "username",
+    type: "text",
+    errorMessage: "Username should be 3-16 characters and shouldn't contain special characters",
+    placeholder: "Enter your username",
+    pattern: "^[a-zA-Z0-9]{3,16}$",
+    required:true
+
+NOTA:fijate la expresión para incluir al menos un numero,una letra y un caracter:
+ pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",sobre todo en (?=.*[0-9]) <- mínimo un número
+
+Bien,queda claro como crear un patrón a cumplir con una regexp para un input.Pero,¿como le digo a la  password2 que sea como la uno?:
+La verdad que sólo hay que referenciar la variable o propiedad en cuestión:
+  {
+    id: 5,
+    name: "confirmPassword",
+    label: "confirmPassword",
+    type: "text",
+    errorMessage:"Passwords don't match",
+    placeholder: "Enter your password again",
+    pattern:values.password, <- en [values,setValues] = useState({})tengo el form
+    required: true,
+  },
+];
+
+Claro que para la experiencia de usuario debo ocultar los errores hasta que el usuario deje ese campo input,por ejemplo.Necesitamos esa funcionalidad.
+Hay un evento magnifico para ello,que es el opuesto al hover,y es el onBlur.
+
+El 'blur' va a ir saltando siempre tras perder el foco el input,con lo que primero ha tenido que tenerlo.ES justo lo que quiero,que el usuario entre al input y al salir validarlo:
+Para ello creo un state que le pasaré a cada input(es básicamente un boleano para saber si ha sido visitado o no).
+  const [focused,setFocused] = useState<boolean>(false);
+  
+  const handleFocus = () => {
+    setFocused(true);
+  }
+
+Despues a cada input le paso este método handleFocus y me creo una propiedad custom con ese visitado a true o false:
+ <input 
+        // onChange={e => props.setUsername!(e.target.value)} 
+        // ref={props.refer}
+        id={props.input.id.toString()}
+        name={props.input.name}
+        type={props.input.type}
+        placeholder={props.input.placeholder}
+        onChange={props.onChange}
+        required={props.input.required}
+        pattern={props.input.pattern}
+        onBlur={handleFocus}
+        data-focused={focused.toString()} <- CLAVE
+        />
+
+Al CSS anterior le añado un selector de atributo que sólo lo cambie a display block si es invalid y el data-focused está en true(que lo haya visitado y tenga error).Joder,está perfecto:
+
+input:invalid[data-focused="true"] ~ span {
+  display: block;
+  margin: 0px auto;
+  width: 73%;
+  color: red;
+  font-size: 18px;
+}
+
+Pero no sólo esto,sino que ya tengo una 'clase' para estilizar,por ejemplo puedo cambiar los bordes a rojo,algo muy común:
+input:invalid[data-focused="true"]{
+  border: red;
+
+IMPORTANTE: hay un pequeño problemilla con el último control,ya que no va a disparar el blur,pues sin abandonar el control el usuario ya dará al submit.El último control necesitará del onFocus en vez del onBlur(puede que sea siempre así,pero en principio en el onBlur cambian a true el visited menos el último que lo cambio segun entre al control,es decir en el onFocus.
+NOTA:lo saqué a un function pero puedo hacer:
+<input
+  onFocus={ () => props.input.name === "confirmPassword" && setFocused(true) } 
+Es decir lo identifico y le cambio la prop mediante su setter.
+Puedo observar que es realmente sencillo crear las validacione de esta forma,y no uso librerias,ni hooks raros.Además sería fácil hacer lo mismo en Javascript o Angular.Aunque en React parece una gran opción.
+
+Por último recuerda que hay que validar también en el backend los datos.

@@ -1,0 +1,238 @@
+						WEBSITE USING STYLED COMPONENTS
+
+Source: https://www.youtube.com/watch?v=9_s_Essow6s&t=61s
+
+REpo: https://github.com/safak/youtube/tree/react-website
+
+Creo el proyecto e instalo la libreria styled-components.Fijate que Lama proporciona unas fuentes las cuales van a ir en public/fonts/*.
+Para usar estas fuentes hay que usar la directiva css @font-face(parecida a @media) la cual permite especificar una fuente y su url(pero,ojo,aún me queda usarla,esta directiva es sólo para cargar la fuente):
+
+  <style>
+      @font-face {
+        font-family: 'Glacial';
+        src: url("fonts/GlacialIndifference-Regular.otf");
+      }
+      @font-face {
+        font-family: 'Glacial';
+        font-weight: bold;
+        src: url("fonts/GlacialIndifference-Bold.otf");
+      }
+	* {
+		margin:0;
+ 		padding:0;
+		font-family:"Glacial"
+
+Diría que le puedo llamar como quiera.Memoriza este @font-face ya que usarlo me asegura que la fuente siempre estará disponible y la carga es inmediata(investigar SEO).
+
+Usar style-components hace que la aplicación no tenga que ir al archivo .css,lo que lo hace más rápido.Además,no hay confusión posible ya que las clases autogeneradas son un hash unique que nunca va a coincidir en el resto de la app.
+
+import styled from 'styled-components';
+
+const Container = styled.div`
+    height: 100vh;
+    background-color: red;
+`;
+
+export const App = () => {
+  return (
+    <Container>
+  Hello World      
+    </Container>
+  )
+}
+
+Tengo un atajo 'styc' que voy a mapear para que lo importe también:
+
+NOTA:fijate la buena idea que es darle una altura a la nabvar(por ejemplo 50 o 60px) y despues crear el body con height:calc(100vh - 60px); Debo memorizar esta forma.Parece no tener fallo. 
+Y de igual manera este body lo puedo dividir en dos columnas simplemente poniendolo en flex:
+const Body = styled.div`
+  heigth: calc(100vh - 60px); <- menos la navbar
+  display:flex; <- pongo dos columnas en flex
+`
+const Left = styled.div`
+  width:60%;
+`;
+const Right = styled.div`
+ width:40%;
+`;
+Perfecto y sencillo.
+
+IMPORTANTE;fijate que la propiedad letter-spacing para los botones es muy importante y nunca la uso.Asi separo las letras:
+const Button = styled.button`
+  padding: 15px;
+  background-color: darkblue;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border:none;
+  letter-spacing: 1px;
+`;
+
+						CLIP_PATH
+
+Para crear un pequeño trapecio lo mejor es ir a https://bennettfeely.com/clippy/
+y alli elegir cualquier forma.También puedo elegir custom y darle yo la forma.
+Una vez tenga el clip-path va en un div,el cual tengo que flotarlo posicionandolo en absolute y bajandole el index.También darle un width y height y top y left:
+
+div{
+ clip-path: polygon(100% 0%,65% 0%, 45% 100%, 100% 100%);
+ width:100%;
+ height:100%;
+ position:absolute;
+ top:0;
+ left:0;
+ background-color:crimson;
+Puedo ver que es realmente fácil crear un poligono con clip-path.
+
+					ANIMACIONES
+
+Vamos a crear un cuadrado,un rectángulo y un círculo  que vayan moviendose:
+
+const Square = styled.div`
+  width: 60px;
+  height: 60px;
+  background-color: #4e6bff;
+  opacity: 0.7;
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  z-index: -1;
+  animation: square 20s linear alternate infinite;
+
+  @keyframes square {
+    to{
+      transform: translate(100vw,100vh) rotate(360deg);
+    }
+  } 
+`;
+
+const Circle = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ff97af;
+  opacity: 0.7;
+  position: absolute;
+  bottom: 100px;
+  left: -100px;
+  z-index: -1;
+  animation: circle 20s linear alternate infinite;
+  
+  @keyframes circle {
+    to{
+      transform: translate(100vw,-100vh);
+    }
+  }
+`;
+
+}
+
+					CREACION DE PISOS O NIVELES
+
+Fijate que la clave ha estado en repetir un div con height a 100vh.Se le llamó Container:
+
+const Container = styled.div`
+  height: 100vh;
+  overflow: hidden;
+`;
+
+export const App = () => {
+  return (
+    <>
+      <Container> <- PISO UNO
+        <Navbar />
+        <Intro /> <- en Intro decido las columnas,
+        <IntoShape /> <- el clipPath
+      </Container>
+      <Container> <- PISO DOS
+        <Feature />
+      </Container>
+    </>
+  );
+};
+
+Fijate que facilidad para decidir el layout de cada piso,esta vez con dos columnas a 50%.(ahora estoy en ese componente Feature,lo pongo en Flex y despues divido en columnas).
+*Dentro de Feature.jsx:
+const Container = styled.div`
+  display: flex;
+`;
+const Left = styled.div`
+  width: 50%;
+`;
+
+const Right = styled.div`
+  width: 50%;
+`;
+
+const Feature = () => {
+  return (
+    <Container>
+     <Left></Left> 
+      <Right></Right>
+    </Container>
+  )
+}
+NOTA: recuerda que puedo importar cualquier imagen como un componente:
+import Phone from './../img/phone.png';
+
+Desde luego me queda mucho por aprender en cuanto a CSS,pero voy comprendiendo todo y memorizandolo a la perfección.
+
+			MIXINS - HERENCIA - NO REPETIR CODIGO CSS
+
+Styled Components tiene una forma muy sencilla de crear codigo que puedo heredar/inferir donde desee.Cuando tenga partes de código que vea que se repiten puedo usar la función css de esta libreria,dar un nombre a ese bloque e inferirlo con ${nombre}:
+import styled,{css} from 'styled-components';
+
+const Shape= css`
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:-1;
+`;
+
+*Dado que voy a usar más clip-paths y esto será común a todos ellos,pues los quioero en absolute y abarcando el portview actual mejor uso la función css.Solo hay que inferir este código con ${Shape}.Increíble:
+
+const IntroShape = styled.div`
+  ${Shape}
+  clip-path: polygon(...)
+  background-color:...
+`;
+
+const FeatureShape = styled.div`
+  ${Shape}
+
+NOTA:para que cada Shape coga al Container(al div) de cada piso como padre hay que posicionarlo en relative a ese padre:
+      <Container> <- este en relative
+        <Navbar />
+        <Intro />
+        <IntroShape /> este en absolute
+      </Container>
+      <Container> <- este en relative
+        <Feature />
+        <FeatureShape /> <- este en absolute
+      </Container>
+
+Si no cogerá al documento entero como padre.Puedo ver como la estructura del diseño es muy profesional y buena.Sería buena idea servir este proyecto en docs.
+NOTA:quedarse como hizo la responsiveness
+
+						LEVEL 3 
+
+Para el tercer piso de nuevo creo un Container en el app.js con su clip-path:polygon(...) y la diferencia va a estar en que removeremos una imagen programáticamente para mostrar un video:
+
+const [ open, setOpen ] = useState(false);
+Despues puedo usar cualquier estilo condicionado a este estado:boolean:
+
+const Image = styled.img`
+display: ${ props => props.open && 'block'}
+
+Eso si,este styledComponent debe recibir la prop en el HTML
+<Image open={open} 
+Y simplemente que disparé un botón el cambio de estado con el setter:
+<Button onClick={() => setOpen(true)}>
+ 
+NOTA:para centrar un elemento(de bloque sólo) verticalmente puedo usar position:absolute top0,bottom0 y margin auto y se centra
+
+MINUTO 1h08 creando componente Price

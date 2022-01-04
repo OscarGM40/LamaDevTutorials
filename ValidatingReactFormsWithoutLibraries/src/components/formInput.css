@@ -2,11 +2,36 @@
 
 input {
   padding: 15px;
-  margin: 10px 0px;
-  border: 1px solid #ccc;
+  margin: 10px auto;
+  border: 2px solid #ccc;
   border-radius: 4px;
-  width: 100%;
+  width: 70%;
+  display: block;
+  font-size: 18px;
+  
 }
 
+label {
+  color:black;
+  display: block;
+  margin: 10px auto 0px auto;
+  width: 73%;
+  font-size: 18px;
+}
 
+span {
+  display: block;
+  margin: 0px auto;
+  width: 73%;
+  color: red;
+  font-size: 18px;
+  display:none;
+}
 
+input:invalid[data-focused="true"] ~ span {
+  display: block;
+  margin: 0px auto;
+  width: 73%;
+  color: red;
+  font-size: 18px;
+}
