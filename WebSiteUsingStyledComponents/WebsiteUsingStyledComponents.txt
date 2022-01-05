@@ -235,4 +235,3 @@ Y simplemente que disparé un botón el cambio de estado con el setter:
  
 NOTA:para centrar un elemento(de bloque sólo) verticalmente puedo usar position:absolute top0,bottom0 y margin auto y se centra
 
-MINUTO 1h08 creando componente Price
