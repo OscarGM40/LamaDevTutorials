@@ -6,7 +6,14 @@ const Container = styled.div`
   height: calc(100vh - 60px);
   display: flex;  
   padding: 20px 0px 0px 0px;
-`;
+  
+  @media only screen and (max-width:480px) {
+    flex-direction: column;
+  }
+
+
+
+  `;
 
 const Left = styled.div`
   width: 60%;
@@ -14,18 +21,39 @@ const Left = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
+  
+  @media only screen and (max-width:480px) {
+    width: 100%;
+    height: 100%;
+    margin-left: 10px;
+  }
+  `;
 
 const Title = styled.h1`
   font-size: 60px;
   width: 60%;
-`
+  
+  @media only screen and (max-width:480px) {
+    width: 100%;
+    font-size: 50px;
+    margin: 10px;
+  }
+  @media only screen and (min-width:600px) {
+    font-size: 30px;
+  }
+`;
 
 const Desc = styled.p`
   width: 60%;
   font-size: 22px;
   margin-top: 20px;
-`;
+  
+  @media only screen and (max-width:480px) {
+    width: 100%;
+    margin: 10px;
+    padding-right: 10px;
+  }
+  `;
 
 const Info = styled.div`
   width: 60%;
@@ -33,7 +61,12 @@ const Info = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 50px;
-`;
+  
+  @media only screen and (max-width:480px) {
+    width: 100%;
+    flex-direction: column;
+  }
+  `;
 
 const Button = styled.button`
   padding: 15px;
@@ -45,6 +78,9 @@ const Button = styled.button`
   font-weight: bold;
   border:none;
   letter-spacing: 2px;
+  @media only screen and (max-width:480px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const Contact = styled.div`
@@ -70,6 +106,10 @@ const Right = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width:480px) {
+    display: none;
+  }
 `;
 
 const Image = styled.img`

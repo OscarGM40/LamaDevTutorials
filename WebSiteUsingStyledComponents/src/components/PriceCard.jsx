@@ -14,6 +14,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media only screen and (max-width:480px) {
+    margin-right: 0;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
 `;
 
 const PriceContainer = styled.div`
@@ -27,6 +32,9 @@ const PriceContainer = styled.div`
 const Price = styled.span`
   font-weight: bold;
   font-size: 70px;
+  @media only screen and (max-width:480px) {
+    font-size: 40px;
+  }
 `;
 
 
@@ -39,6 +47,9 @@ const Type = styled.button`
   border-radius: 20px;
   cursor: pointer;
   font-size: 22px;
+   @media only screen and (max-width:480px) {
+     display: none;
+  }
   `;
 
 const List = styled.ul`
@@ -47,12 +58,19 @@ const List = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;  
+  @media only screen and (max-width:480px) {
+    margin-top: 0px;
+  }
 `;
 
 const ListItem = styled.li`
    margin:30px auto;
    font-size: 20px;
    text-align: center;
+   @media only screen and (max-width:480px) {
+      font-size: 16px;
+      margin: 5px 10px;
+    }
 `;
 
 const Button = styled.button`
@@ -65,6 +83,11 @@ const Button = styled.button`
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
+  @media only screen and (max-width:480px) {
+    margin-bottom: 0px;
+    font-size: 16px;
+    padding: 10px 15px;
+  }
 `;
 
 const PriceCard = ({price,type}) => {

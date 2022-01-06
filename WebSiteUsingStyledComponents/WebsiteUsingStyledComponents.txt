@@ -235,3 +235,39 @@ Y simplemente que disparé un botón el cambio de estado con el setter:
  
 NOTA:para centrar un elemento(de bloque sólo) verticalmente puedo usar position:absolute top0,bottom0 y margin auto y se centra
 
+							LEVELS 4-5
+
+Para el nivel 4 creará tres cards con otro clip-path.Algo sencillo ya.Para el nivel 5 usará un pattern para el background-image.Aparte dejará un 10% de altura para el footer.Realmente el diseño es sencillo hasta cierto punto.Seguir con práctica de Next para constrastar diseños y mejorar en Next.
+
+		RESPONSIVE DESIGN - MEDIA QUERIES WITH STYLED COMPONENTS
+
+Fijate como puedo mostrar y ocultar en base al dispositivo con window.screen.width:
+
+ const smallScreen = window.screen.width <= 480 ? true : false;
+
+{!smallScreen && <Navbar /> 
+
+Con todo esto podemos crear un <video> diferentte para smallScreens:
+    
+ { smallScreen && open && (
+        <Modal onClick={() => setOpen(false)}>
+          <Video
+            src={VideoSample}
+            open={open} autoPlay loop controls/>
+            <CloseButton onClick={() => setOpen(false)}>
+              Close
+            </CloseButton>
+        </Modal>
+      )}
+
+NOTA:fijate que top,left,right y bottom también pueden recibir porcentajes:
+const CloseButton = styled.button`
+  position: absolute;
+  background-color:white;
+  padding: 5px;
+  border-radius: 5px;
+  border:none;
+  right: 5px;
+  top: 30%;
+`;
+Y como algo posicionado en absolute necesita de dos lados para mostrarse(top/bottom y right/left)

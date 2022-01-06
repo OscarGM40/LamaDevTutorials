@@ -7,11 +7,20 @@ import AnimatedShape from './AnimatedShape';
 
 const Container = styled.div`
   display: flex;
-`;
+  
+  @media only screen and (max-width:480px) {
+    flex-direction: column;
+    padding: 25px 15px;
+  }
+  `;
 
 const Left = styled.div`
   width: 50%;
-`;
+  @media only screen and (max-width:480px) {
+    display: none;
+  }
+  
+  `;
 
 const Image = styled.img`
   width: 56vw;
@@ -19,7 +28,7 @@ const Image = styled.img`
   object-fit: cover;
   position:relative;
   left:-150px;
-`;
+  `;
 
 const Right = styled.div`
   width: 50%;
@@ -27,11 +36,18 @@ const Right = styled.div`
   flex-direction: column;
   justify-content: center;
   /* align-items: center; */
-`;
+  @media only screen and (max-width:480px) {
+    width: 100%;
+  }
+  `;
 
 const Title = styled.span`
   font-size: 100px;  
-`;
+  @media only screen and (max-width:480px) {
+    font-size: 50px;  
+
+  }  
+  `;
 
 const Subtitle = styled.span`
   font-size: 28px;

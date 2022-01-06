@@ -47,6 +47,9 @@ const IntroShape = styled.div`
 `;
 
 export const App = () => {
+
+  const smallScreen = window.screen.width <= 480 ? true : false;
+  
   return (
     <>
       <Container>
@@ -60,7 +63,7 @@ export const App = () => {
       </Container>
       <Container>
         <Service /> 
-        <ServiceShape />
+        {!smallScreen && <ServiceShape />}
       </Container>
       <Container>
         <Price />

@@ -13,11 +13,18 @@ const Container = styled.div`
   border-radius: 10px;
   /* justify-content: center; */
   align-items: center;
-`;
+  @media only screen and (max-width:480px) {
+    width: 100px;
+    padding: 15px;
+    height: 210px;
+    overflow-y: hidden;
+    margin-right: 10px;
+  }
+  `;
 
 const Image = styled.img`
   width: 25px;
-`;
+  `;
 
 const Text = styled.span`
   margin-top: 15px;

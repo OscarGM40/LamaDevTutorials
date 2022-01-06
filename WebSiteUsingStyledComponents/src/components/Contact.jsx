@@ -22,19 +22,31 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;  
   justify-content: center;
+  @media only screen and (max-width:480px) {
+    flex-direction: column;
+  }
   `;
 
 const FormContainer = styled.div`
   width:50%;
   position: relative;
   top: -30px;
+  @media only screen and (max-width:480px) {
+    width: 100%;
+    top: 0;
+  }
+  
+  `;
 
-`;
 
 const Title = styled.h1`
   font-size: 40px;
   margin-bottom: 30px;
   text-align: center;
+  @media only screen and (max-width:480px) {
+     font-size: 28px;
+     margin:10px auto;
+  }
 `;
 
 const Form = styled.form`
@@ -42,6 +54,9 @@ const Form = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media only screen and (max-width:480px) {
+    flex-direction: column;
+  }
 
 `;
 
@@ -51,6 +66,10 @@ const LeftForm = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-right: 20px;
+  @media only screen and (max-width:480px) {
+    height: 50%;
+    margin-right: 0;
+  }
   `;
 
 const RightForm = styled.div`
@@ -58,12 +77,18 @@ const RightForm = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media only screen and (max-width:480px) {
+    height: 50%;
+  }
 `;
 
 const Input = styled.input`
   width: 250px;
   padding: 15px 20px;
   font-size: 20px;
+  @media only screen and (max-width:480px) {
+    padding: 5px;
+  }
   `;
 
 const TextArea = styled.textarea`
@@ -71,7 +96,12 @@ const TextArea = styled.textarea`
   height: 70%;
   padding: 15px 20px;
   font-size: 20px;
-`;
+  @media only screen and (max-width:480px) {
+    padding: 5px;
+    width: 250px;
+    margin-top: 15px;
+  }
+  `;
 
 const Button = styled.button`
   border:none;
@@ -82,7 +112,10 @@ const Button = styled.button`
   padding: 15px;
   border-radius: 10px;
   cursor: pointer;
-
+  @media only screen and (max-width:480px) {
+    margin-top: 15px;
+    padding: 5px;
+  }
 `;
 
 const AddressContainer = styled.div`
@@ -92,6 +125,11 @@ const AddressContainer = styled.div`
   align-items: center;
   position: relative;
   top: 40px;
+  @media only screen and (max-width:480px) {
+    width: 100%;
+    top: 0;
+    margin-top: 10px;
+  }
 
 `;
 
@@ -100,17 +138,29 @@ const AdressItem = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+  @media only screen and (max-width:480px) {
+    margin-bottom: 20px;
+    width: 100%;
+  }
 
 `;
 
 const Icon = styled.img`
   width: 40px;
   margin-right: 20px;
+  @media only screen and (max-width:480px) {
+    width: 25px;
+    margin-right: 10px;
+  }
   `;
 
 const Text = styled.p`
   font-size: 22px;
   margin-right: 15px;
+  @media only screen and (max-width:480px) {
+    margin-right: 10px;
+    font-size: 18px;
+  }
 `;
 
 
@@ -145,7 +195,7 @@ const Contact = () => {
         </AdressItem>
         <AdressItem>
           <Icon src={Send}/>
-          <Text>contact@oscar.devops</Text>
+          <Text>contact@oscar</Text>
           <Text>sales@onosales.com</Text>
         </AdressItem>
         </AddressContainer>
