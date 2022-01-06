@@ -2,7 +2,8 @@
   "name": "website",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://github.com/OscarGM40/LamaDevTutorials",
+
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
