@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/OscarGM40/LamaDevTutorials/static/js/main.346540d9.js",
-    "static/media/StyledComponentsLamaWebsite.mp4": "/OscarGM40/LamaDevTutorials/static/media/StyledComponentsLamaWebsite.59eb591f13925960c3ba.mp4",
-    "static/media/WithTablet-PhotoRoom.png": "/OscarGM40/LamaDevTutorials/static/media/WithTablet-PhotoRoom.729d47db34e08f474206.png",
-    "static/media/womanWithMobile03.png": "/OscarGM40/LamaDevTutorials/static/media/womanWithMobile03.af25accac46bc0638212.png",
-    "static/media/iphone.png": "/OscarGM40/LamaDevTutorials/static/media/iphone.71b84fe77251ccc15631.png",
-    "static/media/45degreee_fabric.png": "/OscarGM40/LamaDevTutorials/static/media/45degreee_fabric.26e6dbe3813500734aa3.png",
-    "index.html": "/OscarGM40/LamaDevTutorials/index.html",
-    "main.346540d9.js.map": "/OscarGM40/LamaDevTutorials/static/js/main.346540d9.js.map"
+    "main.js": "/static/js/main.299a46e2.js",
+    "static/media/StyledComponentsLamaWebsite.mp4": "/static/media/StyledComponentsLamaWebsite.59eb591f13925960c3ba.mp4",
+    "static/media/WithTablet-PhotoRoom.png": "/static/media/WithTablet-PhotoRoom.729d47db34e08f474206.png",
+    "static/media/womanWithMobile03.png": "/static/media/womanWithMobile03.af25accac46bc0638212.png",
+    "static/media/iphone.png": "/static/media/iphone.71b84fe77251ccc15631.png",
+    "static/media/45degreee_fabric.png": "/static/media/45degreee_fabric.26e6dbe3813500734aa3.png",
+    "index.html": "/index.html",
+    "main.299a46e2.js.map": "/static/js/main.299a46e2.js.map"
   },
   "entrypoints": [
-    "static/js/main.346540d9.js"
+    "static/js/main.299a46e2.js"
   ]
 }
