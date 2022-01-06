@@ -140,7 +140,7 @@ const Intro = () => {
         </Info>
       </Left>
       <Right>
-       <Image src={womanImg} />
+        <Image src="img/womanWithMobile03.png" />
       </Right>
       <AnimatedShape />
     </Container>
