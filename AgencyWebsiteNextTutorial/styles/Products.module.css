@@ -1,0 +1,60 @@
+
+
+
+
+
+
+
+
+.container {
+  display: flex;
+  padding: 50px;
+}
+
+.cardLarge {
+  flex:2;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cardSmall {
+  flex:1;
+}
+
+.imgContainer {
+  width: 30%;
+  margin: 5px;
+  background-color:green;
+  border-radius: 6px;
+}
+/* no es lo mismo 3 que 3n(3n es cada 3) */
+.imgContainer:nth-child(3) {
+  border-top-right-radius: 50%;
+  overflow: hidden;
+}
+
+.imgContainer:nth-child(2n){
+  border:2px solid black;
+}
+.imgContainer:nth-child(2n+1){
+  border:2px solid red;
+}
+
+.title {
+  font-size: 70px;
+}
+.desc {
+  font-size: 24px;
+  font-weight: 200; 
+}
+
+.button {
+  padding: 15px;
+  border:none;
+  background-color:green;
+  color: white;
+  font-size: 22px;
+  border-radius: 6px;
+  margin-top: 50px;
+  cursor: pointer;
+}

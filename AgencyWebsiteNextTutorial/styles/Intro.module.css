@@ -1,0 +1,48 @@
+.container {
+  height: calc(100vh - 50px);
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+ 
+}
+
+.card {
+  /* width:50%;  seria lo mismo usar width*/
+  flex: 1;
+  padding: 100px;
+  padding-right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+}
+
+.title {
+  font-size: 60px;
+  margin: 0;
+}
+
+.brand {
+  color: green;
+  margin-right: 5px;
+}
+
+.desc {
+  font-size: 24px;
+  margin: 0;
+
+}
+
+.button {
+  border:none;
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  width: 150px;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+

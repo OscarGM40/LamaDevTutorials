@@ -1,0 +1,219 @@
+                       AGENCY SEO OPTIMIZED WEBSITE WITH NEXT
+
+Source: https://www.youtube.com/watch?v=erpw_22yAJM&t=129s
+Repo: https://github.com/safak/youtube/tree/next-agency
+
+Deploy con Vercel: https://nextjs.org/docs/deployment
+
+NOTA:si veo el error de que no encuentra @next/babel parece que hay que cambiar en el .eslint esto:
+{
+  "extends": "next/babel" <- antes apuntaba a otro sitio.
+}
+
+Bien,volviendo a la aplicación,fijate que en este tipo de aplicaciones siempre se repite el footer y navbar,asi que puedo crear un componente padre y usar {children}:
+
+import Footer from "./Footer"
+import Navbar from "./Navbar"
+
+const Layout = ({ children }) => {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  )
+}
+
+export default Layout
+
+Dado que además estoy en Next puedo usar eso a mi favor para en _app.js hacer esto:
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+}
+
+export default MyApp;
+
+IMPORTANTE: si intento usar selectores de etiqueta en Next me va a dar este error:
+Syntax error: Selector "h1" is not pure (pure selectors must contain at least one local class or id).
+En NEXT tengo que dar una clase o un id como selector.
+
+NOTA:realmente puedo usar un <Head> diferente en cada página(a diferencia de React) con lo que puedo cambiar el title,por ejemplo.Además esto ayuda al SEO
+
+Fijate que va a seguir el mismo patrón 100vh por cada piso.Al primero le quitaremos la navbar,claro y al último el footer.Aparte,fijate como crear dos columnas de 50% con flex:1 a ambas(claro que width al 50% haría lo mismo,pero ya que están en flex..):
+
+.container {
+  height: calc(100vh - 50px); 
+  display: flex;
+}
+
+.card {
+  flex:1;
+}
+
+Bien,creo un h1,un <p> un botón etc y a la derecha queremos poner una imagen,pero de nuevo,no puedo usar ni <a> ni <img> en Next.Hay que usar su <Image> componente.
+Investigar porqué.
+Bien,una vez con su componente si intento usarlo de forma normal veré este error(lo anterior era un warning??):
+Error: Image with src "/img/Avocado.png" must use "width" and "height" properties or "layout='fill'" property.
+
+Como puedo ver me pide un width y un height y una nueva propiedad layout.Pero además me pedirá posicionar al padre,al que contenga a esa <Image> en relative.Y otra propiedad más que debo usar en la tag es objectFit
+
+NOTA:fijate que esto  <div className="circle"> apunta al global.css,es un estilo global mientras que  <div className={styles.circle}> es un estilo local.
+
+IMPORTANTE:fijate como un componente puede recibir props en sus estilos(quizás en React también se puede):
+
+En el Intro.jsx:
+<Circle backgroundColor="yellow" />
+
+En el hijo Circle.jsx
+export const Circle = (props) => {
+
+<div style={ {...props} }-
+
+Al final lo que ha hecho es crear dos circulos grandes y posicionarlos en absoluta,pero dejando para más tarde dónde ubicarlos:
+.circle {
+  height: 100vh;
+  width: 100vh;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 999;
+  opacity: 0.1;
+}
+
+En intro llama a dos circulos y alli si los posiciona.Como los Circle reciben por props culaquier cosa y se lo pasan a los estilos puedo hacer lo que quiera.Espectacular.
+
+const Intro = () => {
+  return (
+    <div className={styles.container}>
+      <Circle 
+        backgroundColor="#b0ff49" 
+        top="-50vh"
+        left="-50vh"
+        />
+      <Circle 
+        backgroundColor="#01c686" 
+        right="-40vh"
+        />
+
+Eso si,fijate que crearán scroll,asi que hay que posionar al Intro(al padre,al que tenga esos Circle en relative y el quito el scroll con overflow:hidden)
+	
+				NIVEL DOS -SERVICES -
+
+En el nivel dos vamos a precargar unos datos.De momento serán desde un archivo,pero podía ser un backend cualquiera.
+Fijate que en Next es diferente,primero se hacen las peticiones,es decir,se ejecuta el getStaticProps y despues se pinta el componente,mientras que en React primero se pinta el componente y despues en un useEffect se piden los datos:
+
+/* getStaticProps permite realizar un fetch(o cualquier otra cosa) antes de que se muestre el componente y mandarlo por props.Mejora la eficiencia y el SEO */
+export const getStaticProps = async () => {
+  const res = data;
+  return {
+    props: {
+      services: res,
+    },
+  }
+}
+El componente lo recibirá por props con ese nombre:
+export default function Home({ services }) {
+
+Fijate como puedo usar max-content para poner un border-bottom a un texto que sea de la longitud de ese texto:
+.title {
+  font-size: 30px;
+  border-bottom: 4px solid green;
+  width: max-content;
+}
+
+Fijate que no es buena idea usar display:none ya que no la puedo animar.Sin embargo si que puedo animar la opacidad.Espectacular.
+.service:hover .desc {
+  transition: opacity 0.8s ease;
+  opacity: 1;
+}
+
+
+.desc {
+  width: 70%;
+  text-align: center;
+
+  z-index: 100;
+  position: absolute;
+  background-color: rgba(189,183,183,0.6);
+  padding: 20px;
+  font-size: 18px;
+  border-radius: 15px;
+  transition: opacity 0.8s ease;
+  opacity: 0;
+}
+
+NOTA: investigar cuando es necesario passHref y cuando no:
+   <h1 className={styles.linkTitle}>
+          <Link href="/contact" passHref>
+          <span>WORK WIHT US</span>
+          <Image src="/img/link.png"></Image>
+        </Link>
+
+Fijate como a la hora de hacer un footer o cualquier otra cosa puedo meter <br /> cuando necesite y también HTML ENtities,para,por ejemplo el copyright:
+  <div className={styles.cardItem}>
+          FOLLOW US <br />__FB __IN __BE __TW
+  </div>
+  <div className={styles.cardItem}>
+       &copy;   2022 LAMA INTERACTIVE, <br />ALL RIGHTS RESERVED
+  </div>
+
+				GET STATIC PROPS VS GET STATIC PATHS
+
+Fijate que queremos crear esta ruta /products/:name.No es muy difícil,hay que crear el directorio products y despues un archivo [name].js,con el mismo nombre que el param.Fijate que no puedo llamar a un componente asi(o sea,[name]),hay que llamarlo con un nombre normal capitalizado.En este caso será un Product
+
+Como tenemos un param dinámico vamos a necesitar getStaticPaths también.Este método devuelve un arreglo con las rutas dinámicas([`design','contact','development']
+
+export const getStaticPaths = async () => {
+  const products = data;
+  const paths = products.map(product => ({
+    params: {
+      name: product.name,
+    },
+  }));
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+Y ahora ya podemos crear un useEffect que haga una petición en cada ruta con getStaticProps:
+export const getStaticProps = async ( ctx ) => {
+  const name = ctx.params.name
+  
+  const product = data.find(product => product.name === name);
+  
+  return {
+    props: {
+      product,
+    },
+  }
+}
+Fijate que ambos métodos pueden ser asyn,y devuelven un objeto con propiedades establecidas ya que debo llenar con la data que quiera.Es bastante sencillo.
+
+NOTA:Next.js no va a dejar renderizar una imagen con un enlace externo como este ejemplo:Invalid src prop (https://images.pexels.com/photos/962000/pexels-photo-962000.jpeg?
+Hay que agregarlo en una whitelist en el archivo next.config.js
+
+module.exports = {
+  reactStrictMode: true,
+  images: {
+    domains: ["images.pexels.com"],
+  }
+}
+Lógicamente puedo agregar más dominios a la whitelist.Fijate como usa la propiedad flex en vez de darle un width de 66% a una card y a otra del 33%(aparte que no suman 100%):
+
+.cardLarge {
+  flex:2;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cardSmall {
+  flex:1;
+}
+
+Esto es algo sencillo,y muy útil. Fijate también en el buen gusto,lo importante que es a la hora de diseñar.
