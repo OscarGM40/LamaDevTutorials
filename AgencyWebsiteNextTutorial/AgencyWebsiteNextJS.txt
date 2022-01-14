@@ -217,3 +217,5 @@ Lógicamente puedo agregar más dominios a la whitelist.Fijate como usa la propi
 }
 
 Esto es algo sencillo,y muy útil. Fijate también en el buen gusto,lo importante que es a la hora de diseñar.
+
+

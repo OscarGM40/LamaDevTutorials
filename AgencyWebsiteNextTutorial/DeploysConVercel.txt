@@ -1,0 +1,8 @@
+								DEPLOY CON VERCEL BY ARNATZ
+
+Source: https://www.youtube.com/watch?v=B47JwFXJbgc&list=PLaaTcPGicjqiuPBDcDaVxnL81ns1cPTpb&index=2
+
+Antigúamente se llamaban ZeithNow.Lo primero será registrarse en su web:
+https://vercel.com
+
+La cuenta gratuita será de tipo 'Hobby',igual que es 'Spark' en Firebase.

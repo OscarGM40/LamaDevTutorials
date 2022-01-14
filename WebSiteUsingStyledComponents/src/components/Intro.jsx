@@ -106,19 +106,19 @@ const Right = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  
   @media only screen and (max-width:480px) {
     display: none;
   }
 `;
 
-const Image = styled.img`
+const Image = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  object-fit: cover;
-  border:none;
-  
+  background-image: url(${womanImg});
+  background-size: cover;
+  background-position: center;
   
 `;
 
@@ -139,8 +139,8 @@ const Intro = () => {
 
         </Info>
       </Left>
-      <Right>
-       <Image src={womanImg} />
+      <Right >
+       <Image />
       </Right>
       <AnimatedShape />
     </Container>

@@ -8,7 +8,7 @@ import Send from '../img/send.png';
 
 const Container = styled.div`
   height: 90%;
-  background-image: url("LamaDevTutorials/"+${Pattern});
+  background-image: url(${Pattern});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

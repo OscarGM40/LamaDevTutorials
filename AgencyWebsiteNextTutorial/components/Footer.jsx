@@ -12,7 +12,7 @@ const Footer = () => {
         <h1 className={styles.title}>AV0CAD0 CREATIVES.</h1>
         <h1 className={styles.linkTitle}>
           <a href="/contact" >
-            <span className={styles.linkText}>WORK WIHT US</span>
+            <span className={styles.linkText}>WORK WITH US</span>
             </a>
             <Image
               src="/img/link.png"

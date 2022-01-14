@@ -38,3 +38,21 @@
 .cardItem {
 margin-bottom: 25px;
 }
+
+@media screen and (max-width:480px){
+  .container {
+    height: auto;
+    flex-direction: column;
+    padding: 5px 20px 5px 20px;
+  }
+
+  .title, .linkTitle {
+    font-size: 30px;
+    justify-content: center;
+  }
+  .cardItem {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+  
