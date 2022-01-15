@@ -6,3 +6,32 @@ Antigúamente se llamaban ZeithNow.Lo primero será registrarse en su web:
 https://vercel.com
 
 La cuenta gratuita será de tipo 'Hobby',igual que es 'Spark' en Firebase.
+
+Bien para poder publicar una app lo primero será instalar el CLI de vercel.Si las voy a usar mucho mejor instalarlas en global,sino con instalarlas en el proyecto,pero además en desarrollo me valdrá:
+npm i vercel -D <- para local
+
+IMPORTANTE: al instalar vercel en un proyecto para usar el comando vercel tendré que usar npx(para que tome el vercel de allí dentro)Si estuviera en global lógicamente no hace falta.
+
+Ahora debería crearme un script(con el nombre que quiera) para la publicación:
+  "publish":" npm run build && npx vercel --prod"
+
+NOTA: Deberá haber un fichero vercel.json con la configuración para ellos.
+NOTA: Dado que Vercel creó Next.JS es el único framework que no necesita ese archivo.
+IMPORTANTE:el fichero vercer.json debe ir en la raiz del proyecto
+
+				FICHERO DE CONFIGURACIÓN VERCEL.JSON
+
+En este archivo hay que tener en cuenta tres aspectos o propiedades fundamentales,la versión(version),las rutas(routes) y la compilación(builds[]):
+{
+  "version":2,
+  "builds": [ {"src":"build/server.js","use":"@vercel/node"} ],
+  "routes":[ {"src":"/.*","dest":"build/server.js} ]
+
+Tras configurar el vercel.json hay que usar ese npm publish(que al final ejecuta simplemente vercel --prod).
+Es buena idea no linkar el deploy a un proyecto existente(asi crea uno nuevo),a noo ser que sea lo que quiero hacer.
+Le doy un nombre y ahora me preguntará en que directorio está el código alojado.
+Esto es muy importante,ya que muchas veces estará en ./build 
+
+Como puedo ver builds es un arreglo de objectos diciendo a vercel quien interpreterá esa extensión
+
+NOTA:un proyecto Node vercel lo tratará como Others.Seguir investigando como publicar con vercel.

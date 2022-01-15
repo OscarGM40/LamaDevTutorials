@@ -218,4 +218,52 @@ Lógicamente puedo agregar más dominios a la whitelist.Fijate como usa la propi
 
 Esto es algo sencillo,y muy útil. Fijate también en el buen gusto,lo importante que es a la hora de diseñar.
 
+IMPORTANTE:puedo pasar de no mostrar un componente con display none a mostrarlo con display:flex(en realidad con cualquier display que no sea none).No tengo porque pasar de none a block sino de none a cualquier display diferente a none.
 
+Fijate como ha posicionado un menu en fixed por encima de todo y al hacer click en el hamburger lo trae desde la derecha:
+ <div className={styles.hamgurger}
+         onClick={() => setOpen(!open)}>
+
+    <ul 
+        onClick={() => setOpen(false)}
+        className={styles.menu} style={{
+        right: open ? "0px" : "-50vw"
+      }}>
+ transition: right 0.9s ease;
+
+Breakpoints :
+320px - 480px: Mobile devices
+481 - 768px: iPads,Tablets
+769px - 1024px: Small screens, laptops
+1025px - 1200px: Desktops,large screens
+1201px+ : Extra large screens,
+
+						DESPLEGAR APP DE NEXT.JS
+
+Para desplegar la app usaremos el script next export el cual crea la carpeta out con todo el bundle para desplegarlo:
+
+"build":"next build && next export" el cual va a exportar la aplicación a una carpeta.
+
+Sin embargo va a haber problemas con las imagenes,debido a sus rutas.Recuerda que ya tuvimos que incluir el dominio de pexels asi:
+
+module.exports = {
+  reactStrictMode: true,
+  images: {
+    domains: ["images.pexels.com","domain.com"],
+  },
+  loader:"imgix",
+  path:"",
+}
+
+Asi que agrego lo anterior y creo una variable de entorno en un .env:
+NEXT_PUBLIC:URL = "https://domain.com" 
+Y se la paso a cada imagen
+ <Image src={process.env.NEXT_PUBLIC_URL+"/img/Avocado.png"} 
+
+IMPORTANTE: al final he tenido que usar otro loader
+  images: {
+    domains: ["images.pexels.com"],
+    loader:"akamai",
+    path:"",
+  },
+Al final lo subi a netlify 

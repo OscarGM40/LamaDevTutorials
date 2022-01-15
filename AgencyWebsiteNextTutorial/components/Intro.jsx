@@ -28,6 +28,7 @@ const Intro = () => {
         <button className={styles.button}>DISCOVER</button>
       </div>
       <div className={styles.card}>
+        {/* <Image src={process.env.NEXT_PUBLIC_URL+"/img/Avocado.png"}  */}
         <Image src="/img/Avocado.png" 
          /*  width="100%"
           height="100%" */
