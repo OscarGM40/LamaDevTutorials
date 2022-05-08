@@ -1,0 +1,150 @@
+			 TUTORIAL BY LAMA DE LA LIB REACT-TESTING-LIBRARY
+
+Source: https://www.youtube.com/watch?v=Flo268xRpV0&t=56s&ab_channel=LamaDev
+
+Lo primero de todo es entender que el testing es necesario.Cuando desarrollo una aplicación debo testearla,ya que yo si sé como funciona,pero un usuario cualquiera no tiene ni idea.
+Además,la seguridad es algo muy importante también hoy en dia.
+
+				TESTING
+
+IMPORTANTE: Un test consta de tres partes.
+PASO UNO: La primera siempre será renderizar el componente sobre el que estoy trabajando:
+
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />
+});
+En esta libreria en concreto se usa el método render con un componente por argumento.
+
+PASO DOS: seleccionar un elemento HTML especifico de alguna forma.Con esta libreria se busca un enfoque de un usuario,asi que puede seleccionar por texto,por role, o usar la propiedad data-testid:
+
+test('should renders learn react link', () => { 
+  render(<App />);
+  const h1Text = screen.getByText(/Welcome to React-testing-library/i)
+ })
+En este caso usamos getByText asi que seleccionamos por texto.Fijate que lleva una regexp como argumento.
+
+PASO TRES: Realizar una aserción de algun tipo.Obviamente debe ser algo útil.
+expect(h1Text).toBeInTheDocument();
+
+NOTA: muchos elementos HTML ya tienen un rol por defecto,y a otros se lo puedo dar con el atributo role:
+<button role="tab">1</button> <- tambien iba a tener el role button,pero ahora tiene el tab.
+Puedo buscar todos los que tengan ese rol,por ejemplo,testear que tengo 3 <li>:
+render(<App />);
+const listItems = screen.getAllByRole('listitem');
+expect(listitems).toHaveLength(3)
+
+TIP: dado que getAllByRole devuelve un array también puedo asertar esto:
+expect(listitems.length).toBe(3) | toEqual(3)
+IMPORTANTE: no debo memorizar los métodos,sino consultar su doc cuando lo necesite.
+Puedo seleccionar por data-testid con getByTestId o por title con getByTitle:
+	 
+ it('should render the h2 text', () => {
+    const h2Text = screen.getByTestId('mytestid');
+    expect(h2Text).toBeInTheDocument();
+  });
+
+  it('should render the span text', () => {
+    const spanText = screen.getByTitle(/time/i);
+    expect(spanText.textContent).toBe('when you can');
+  });
+
+NOTA: Jest es una libreria de Javascript,que determina si pasan los test(un runner).Me vale tanto para React,como Angular,Vue,Javascript Vanilla,...Simplemente es una libreria JS.Jest se ocupa de los expect
+IMPORTANTE: puedo extenderla con jest-extend y otros plugins
+
+Puedo empezar los test esperando que estén los elementos que deben estar y con unos valores iniciales fijos:
+  test("password input should be rendered", () => {
+    const passInputEl = screen.getByPlaceholderText(/Password/i);
+    expect(passInputEl).toBeInTheDocument();
+  })
+
+  test("login button should be rendered", () => {
+    const loginButtonEl = screen.getByRole("button", { name: /login/i });
+    expect(loginButtonEl).toBeInTheDocument();
+  });
+
+  test("login button should be disabled", () => {
+    const loginButtonEl = screen.getByRole("button", { name: /login/i });
+    expect(loginButtonEl).toBeDisabled();
+  });
+  
+  test('username input should be empty', () => {
+    const userInputEl = screen.getByPlaceholderText(/Username/i);
+    expect(userInputEl.value).toBe('');
+  })
+
+Puedo seguir con otras aserciones como que no salga el mensaje de error:
+  test("error message should be invisible", () => {
+    const errorMessage = screen.getByTestId("error");
+    expect(errorMessage).not.toBeVisible();
+  })
+
+				DISPARANDO EVENTOS
+
+Hay varias formas de disparar eventos,una es con fireEvent.change(element,event):
+
+const userInputEl = screen.getByPlaceholderText(/Username/i);
+fireEvent.change(userInputEl,{ target: {value : 'user01' } } )
+expect(userInputEl.value).toBe('user01')
+
+Otra es con el método element.dispatchEvent(new Event('change'):
+const userInputEl = screen.getByPlaceholderText(/Username/i);
+userInputEl.value = 'user02'
+userInputEl.dispatchEvent(new Event('change'));
+expect(userInputEl.value).toBe('user02').
+
+¿Hay alguna más apropiada que otra?
+
+TIP: fijate que al usar TDD primero fallará esta prueba:
+  test('button should not be disabled when inputs exist', () => {
+    const userInputEl = screen.getByPlaceholderText(/Username/i);
+    fireEvent.change(userInputEl, { target: { value: "admin" } });
+    const passwordInputEl = screen.getByPlaceholderText(/Password/i)
+    fireEvent.change(passwordInputEl, { target: { value: "123456"}})
+    const loginButtonEl = screen.getByRole("button", { name: /login/i }
+    );
+    expect(loginButtonEl).not.toBeDisabled();
+  })
+
+La soluciono con un !input || !password. Muy inteligente
+  <button disabled={!username || !password}
+
+Fijate en este assert para ver el contenido o texto de un elemento:
+  
+test("loading should not be rendered", () => {
+    const loginButtonEl = screen.getByRole("button", { name: /login/i });
+    expect(loginButtonEl).not.toHaveTextContent(/please wait/i);
+  });
+
+not.toHaveTextContent() lo usaré mucho.
+
+IMPORTANTE: cuando testee algo con un backend o una petición http de por medio si ese backend cae caerán mis pruebas.Puedo mockear la respuesta por defecto que tendría un método con jest.mock.
+TIP: jest.mock en un archivo tiene ámbito local,pero si lo pusiera en la carpeta __mocks__ tendrá ámbito global y todos los archivos de prueba tendrán acceso a él.En este caso sólo quiero ámbito local asi que lo pondría en login.test.js :
+
+jest.mock("axios",() => ({
+  __esModule:true, <- esto hace falta por ser Reacta
+  default:{
+    get: () => ({
+      data:{id:1,name:"John"}
+    })
+  }
+}))
+
+
+Por último,si quiero testear una petición asincrona,tengo que usar async await + waitFor el expect.Fijate.
+  test('loading should not be rendered after fetching', async () => {
+    const userInputEl = screen.getByPlaceholderText(/Username/i);
+    const passwordInputEl = screen.getByPlaceholderText(/Password/i)
+    const loginButtonEl = screen.getByRole("button", { name: /login/i });
+    
+    const testValue = "test"
+
+    fireEvent.change(userInputEl, { target: { value: testValue } });
+    fireEvent.change(passwordInputEl, { target: { value: testValue}})
+    fireEvent.click(loginButtonEl)
+    await waitFor(() =>expect(loginButtonEl).not.toHaveTextContent(/please wait/i));
+  })
+await waitFor(() => expect...)
+TIP: dió problemas ,tuve que instalar "jest-environment-jsdom-sixteen": "^2.0.0" y cambiar el script a ese entorno:
+  "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
