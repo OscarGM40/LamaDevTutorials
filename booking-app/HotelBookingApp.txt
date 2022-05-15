@@ -1,0 +1,7 @@
+				 REACT BOOKING APP - HOTEL RESERVATION
+
+Source: https://www.youtube.com/watch?v=RkWpJ4XUHuw&t=3s
+
+Fijate que Vite ya viene configurado para soportar sass(aunque hay que instalar la libreria con npm i sass).Igual que Next.
+
+

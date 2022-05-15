@@ -1,0 +1,43 @@
+.navbar {
+  height: 50px;
+  background-color: #003580;
+  display: flex;
+  justify-content: center;
+
+  .navContainer {
+    width: 100%;
+    max-width: 1024px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+      font-size: 1.4rem;
+      color: whitesmoke;
+      font-weight: 500;
+    }
+
+    .navButton {
+      margin-left: 20px;
+      background-color: rgb(69, 69, 69);
+      border: 1px solid transparent;
+      padding: 10px 15px;
+      color: white;
+      font-weight: 400;
+      border-radius: 20px;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      
+      &:last-child {
+        background-color: rgb(242, 246, 245);
+        color: black;
+      }
+      
+      &:hover {
+        background-color: #4678be;
+        border: 1px solid white;
+      }
+    }
+  }
+}
