@@ -4,4 +4,59 @@ Source: https://www.youtube.com/watch?v=RkWpJ4XUHuw&t=3s
 
 Fijate que Vite ya viene configurado para soportar sass(aunque hay que instalar la libreria con npm i sass).Igual que Next.
 
+TIP: fijate como la mejor opción para configurar 3 incrementos fue un único setter con dos argumentos.Realmente una brillante idea:
+        <button
+                    className='optionCounterButton'
+                    onClick={() => handleOption('adult', 'd')}
+                  >
+                    -
+                  </button>
+                  <span className='optionCounterNumber'>1</span>
+                  <button
+                    className='optionCounterButton'
+                    onClick={() => handleOption('adult', 'i')}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <div className='optionItem'>
+                <span className='optionText'>Children</span>
+                <div className='optionCounter'>
+                  <button
+                    className='optionCounterButton'
+                    onClick={() => handleOption('children', 'd')}
+                  >
+                    -
+                  </button>
+                  <span className='optionCounterNumber'>0</span>
+                  <button className='optionCounterButton'
+                    onClick={() => handleOption('children', 'i')} 
+                  >+</button>
+                </div>
+              </div>
+              <div className='optionItem'>
+                <span className='optionText'>Room</span>
+                <div className='optionCounter'>
+                  <button className='optionCounterButton'
+                    onClick={() => handleOption('room', 'd')}
+                  >-</button>
+                  <span className='optionCounterNumber'>1</span>
+                  <button className='optionCounterButton'
+                    onClick={() => handleOption('room', 'i')}
+                  >+</button>
 
+Y de nuevo fijate en el uso de esta propiedad computada(debo hacer alguna práctica más):
+  const handleOption = (option: "adult" | "children" | "room",op:string) => {
+    setOptions( prev => {
+      return {
+        ...prev,
+        /* va a girar sobre la puta opción(me dió igual que fuera una enum) */
+         [option]: op === 'add' ? prev[option] + 1 : prev[option] - 1
+      }
+    })
+  }
+
+NOTA: ES6 me permite usar una expresión entre corchetes[].Despues usará el resultado de esa expresión como el nombre/key de la propiedad de un objeto(propiedades calculadas o computadas)
+
+Minuto 39 (cambiar la clase de Stays de estática a dinámica)
