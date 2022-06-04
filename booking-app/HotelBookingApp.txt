@@ -59,4 +59,50 @@ Y de nuevo fijate en el uso de esta propiedad computada(debo hacer alguna práct
 
 NOTA: ES6 me permite usar una expresión entre corchetes[].Despues usará el resultado de esa expresión como el nombre/key de la propiedad de un objeto(propiedades calculadas o computadas)
 
-Minuto 39 (cambiar la clase de Stays de estática a dinámica)
+TIP: recuerda que tengo que instalar Sass en un proyecto vite y nada más(y en uno Next??)
+
+Poner el onChange por si sólo no implica pasar de un componente no controlado a controlado,es con onChange + name cuando es necesario un value.Sea como sea nada me impide usar los tres para salir de dudas,aunque fijate que Lama usó sólo un onChange sin el name para que no le salte el warning y asi no tenga que poner el value también
+
+TIP: fijate como pasamos por la ruta los estados que rescato del date-picker de la selección de personas-hijos-habitaciones y del input con navigate.
+
+  const handleSearch = (event: MouseEvent<HTMLButtonElement>) => {
+    navigate('/hotels', {
+      state: {
+        destination,
+        date,
+        options
+      }
+    })
+  } <- muy asinto él -_-
+
+Para rescatarlo desde la ruta a la que lo mandamos uso el hook useLocation:
+ const location = useLocation();
+
+state:
+  date: [{…}] <- fijate que viene un arreglo de un objeto con las props startDate y endDate luego tendré en location.state.date[0].startDate la data
+  destination: "malaga"
+  options: {adult: 2, children: 1, room: 2}
+
+				INTERNACIONALIZAR UNA APP DE REACT CON I18NEXT
+
+Lo primero es instalar dos paquetes, el core y el adapter para React(son i18next y react-i18next).Fijate que en Angular o Vue será el core + el propio del frame,seguramente:
+>npm i i18next react-i18next
+
+Despues lo mejor es seguir la documentación.Hay que crear el archivo i18next.js en la raiz del project e importarlo en el index.tsx.Luego es tan sencillo como usar su hook useTranslation(path).Al parecer este path ha ido cambiando y ahora hay que meter los archivos en public/locales/en/global.json y similar:
+
+const { t, i18next } = useTranslation(global) <- fijate que los files se deben de llamar todos global.json,algo que no es importante ya que la carpeta los hace únicos.Investigar sobre otras ubicaciones posibles y otros nombres de archivos.
+
+ const { i18n,t } = useTranslation(); <- t es una función e i18n es para crear botones que cambien el lng
+TIP: para cambiar el idioma con la app arrancada no puede ser más fácil gracias al mismo hook:
+ const { i18n } = useTranslation()
+ <button className='' onClick={() => i18n.changeLanguage('es')} > ES </button>
+ <button className='' onClick={() => i18n.changeLanguage('en')}>EN</button>
+NOTA: esto sería para Vite o CRA,NExt tiene otra forma desde la v10 que aprnderé en el otro curso ya que soy muy asinto.
+
+Fijate en el script tan interesante para asintos linuxeros(y para Windows??)
+Ojo,modo reemplazar es con mayúsculas y R( con la R mayuscula),no confundir con Redo que es Ctrl+r 
+
+Recuerda que centro con zz,que el modo reemplazar es Mayus + R(redo es con ctrol) y que busco hacia alante con * y hacia atras con #.Despues me muevo con n o con N.Hacer poco a poco el curso de Udemy.
+
+
+

@@ -6,7 +6,7 @@
 
   .navContainer {
     width: 100%;
-    max-width: 1024px;
+    max-width: 1200px;
     color: white;
     display: flex;
     align-items: center;
@@ -28,16 +28,31 @@
       border-radius: 20px;
       transition: all 0.3s ease-in-out;
       cursor: pointer;
-      
-      &:last-child {
+
+      &:nth-child(2n) {
         background-color: rgb(242, 246, 245);
         color: black;
       }
-      
+
+      &:nth-child(3) {
+        background-color: rgb(17, 115, 251);
+        color: black;
+      }
+
+      &:last-child {
+        background-color: rgb(210, 18, 18);
+        color: black;
+      }
+
       &:hover {
         background-color: #4678be;
         border: 1px solid white;
       }
+    }
+
+    .lngButton {
+      @extend .navButton;
+      background-color: rgb(69, 69, 69);
     }
   }
 }
